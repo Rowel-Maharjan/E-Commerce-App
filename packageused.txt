@@ -1,0 +1,16 @@
+
+Backend:
+    bcryptjs - to bycrypt password
+    cloudinary - to upload image and optimization
+    cookie-parser - parse cookies and put cookies information
+    cors - to build web applications that access APIs hosted on a different domain or origin.
+    dotenv - To load environment variable
+    express - backend framework
+    jsonwebtoken - to identify an authenticated user, securely transfer information
+    mongoose - For MongoDB
+    multer - handling multipart/form-data , which is primarily used for uploading files
+    nodemon - Restart your node application when it detects changes
+
+
+Frontend:
+    
