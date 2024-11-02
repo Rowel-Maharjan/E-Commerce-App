@@ -1,17 +1,23 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom'
-import { Input } from "@/components/ui/input"
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/Label"
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '@/store/auth-slice';
 
 
 const Register = () => {
   const { register, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    const response = await axios.post("http://localhost:3000/api/auth/register", data);
+    await dispatch(registerUser())
     reset()
-    console.log(data);
+    navigate("/auth/login")
   }
   return (
     <div className='mx-auto w-full max-w-md text-black'>
@@ -49,7 +55,7 @@ const Register = () => {
         <Button className="mt-2" disabled={isSubmitting} type="submit" >Sign Up</Button>
       </form>
 
-      <p className='mt-2'>Adready have an account?
+      <p className='mt-2'>Adready a user?
         <Link className='text-primary font-medium hover:underline ml-2' to={"/auth/login"} >Login</Link>
       </p>
 

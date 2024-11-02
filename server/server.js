@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import 'dotenv/config'
 import cookieParser from "cookie-parser"
 import cors from "cors";
+import authrouter from "./routes/auth.route.js";
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -10,6 +11,8 @@ const port = process.env.PORT || 3000
 app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
+
+app.use("/api/auth", authrouter)
 
 mongoose.connect("mongodb://localhost:27017/E-Commerce")
     // mongoose.connect(process.env.MONGO_URI)  
@@ -24,8 +27,5 @@ mongoose.connect("mongodb://localhost:27017/E-Commerce")
     })
 
 app.get('/', async (req, res) => {
-    res.send('Hello World!')
+    res.send("Hello world")
 })
-
-
-
