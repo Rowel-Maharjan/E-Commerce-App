@@ -15,10 +15,10 @@ import Listing from '../components/shoppingView/Listing.jsx';
 import App from '../App.jsx';
 import Authentication from '../components/Authentication.jsx';
 
-const isAuthenticated = true
+const isAuthenticated = false
 const user = {
   name: "Rowel",
-  role: "user"
+  role: "admin"
 }
 
 const routes = [
