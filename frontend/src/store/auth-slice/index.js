@@ -3,7 +3,8 @@ import axios from 'axios'
 
 const initialState = {
   isAuthenticated: false,
-  user: null
+  user: null,
+  isLoading: true
 }
 
 
@@ -26,7 +27,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = false
       state.user = null
     },
-    
+
     //When login, authenticity is true
     loginUser: (state, action) => {
       state.isAuthenticated = true,
@@ -44,10 +45,17 @@ export const authSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-    // When checkAuth gets the data then it makes isAuthenticated = true and user value obtained from that get request
+      // When checkAuth gets the data then it makes isAuthenticated = true and user value obtained from that get request
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.user = action.payload.success ? action.payload.user : null
         state.isAuthenticated = action.payload.success
+        state.isLoading = false
+      }).addCase(checkAuth.pending, (state, action) => {
+        state.isLoading = true
+      }).addCase(checkAuth.rejected, (state, action) => {
+        state.isLoading = false
+        state.user = null
+        state.isAuthenticated = false
       })
   }
 })

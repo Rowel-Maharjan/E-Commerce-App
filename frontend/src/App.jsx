@@ -18,11 +18,12 @@ import Authentication from './components/Authentication.jsx';
 import { Route, Routes } from 'react-router-dom';
 import { checkAuth } from './store/auth-slice/index.js';
 import axios from 'axios';
+import { SkeletonCard } from './components/Loading.jsx';
 
 
 function App() {
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth)  //To obtain the value of state
+  const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth)  //To obtain the value of state
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -45,6 +46,12 @@ function App() {
   //      dispatch(checkAuth(response))
   //    })
   // }, [dispatch])
+
+
+  //This is also very important to manage time of components
+  if (isLoading) {
+    return <div className=''>Hello</div>
+  }
 
 
   return (
