@@ -12,11 +12,18 @@ export const authSlice = createSlice({
   reducers: {
     registerUser: (state) => {
       state.isAuthenticated = false
-      state.user = "user"
+      state.user = null
     },
+
+    loginUser: (state, action)=>{
+      state.isAuthenticated = true,
+      state.user = action.payload
+    },
+
+
   },  
 })
 
-export const { registerUser } = authSlice.actions
+export const { registerUser, loginUser } = authSlice.actions
 
 export default authSlice.reducer

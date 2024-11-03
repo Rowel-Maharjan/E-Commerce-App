@@ -6,18 +6,41 @@ import { Label } from "@/components/ui/Label"
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '@/store/auth-slice';
+import { useToast } from "@/hooks/use-toast"
 
 
 const Register = () => {
   const { register, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm();
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { toast } = useToast()
 
   const onSubmit = async (data) => {
-    const response = await axios.post("http://localhost:3000/api/auth/register", data);
-    await dispatch(registerUser())
-    reset()
-    navigate("/auth/login")
+    try {
+      const response = await axios.post("http://localhost:3000/api/auth/register", data);
+      await dispatch(registerUser())
+      console.log(response)
+      if (response.data.success) {
+        reset()
+        navigate("/auth/login")
+        toast({
+          description: "Registrantion Successful",
+          className: "bg-black text-white",
+          duration: 2500
+        })
+      }
+      else{
+        toast({
+          variant: "destructive",
+          description: "Email Already Exist.",
+        })
+      }
+
+    }
+    catch (error) {
+      
+      console.log(error)
+    }
   }
   return (
     <div className='mx-auto w-full max-w-md text-black'>
@@ -28,7 +51,7 @@ const Register = () => {
           <input className='border border-input px-3 py-2 text-sm placeholder:text-muted-foreground rounded-md focus:outline-gray-600 bg-[#e8f0fe]' placeholder='Enter your user name' type="text"
             {...register("username",
               {
-                required: { value: true, message: "Username is required" },
+                required: { value: true, message: "Please Enter Username" },
                 minLength: { value: 3, message: "Min Length is 3" }
               })} />
         </div>
@@ -38,7 +61,8 @@ const Register = () => {
           <input className='w-full border border-input px-3 py-2 text-sm placeholder:text-muted-foreground rounded-md focus:outline-gray-600 bg-[#e8f0fe]' placeholder='Enter your email' type="email"
             {...register("email",
               {
-                required: { value: true, message: "Email is required" }
+                required: { value: true, message: "Please Enter Email" },
+
               })} />
         </div>
 
@@ -47,7 +71,7 @@ const Register = () => {
           <input className='border border-input px-3 py-2 text-sm placeholder:text-muted-foreground rounded-md focus:outline-gray-600 bg-[#e8f0fe]' placeholder='Enter your password' type="password"
             {...register("password",
               {
-                required: { value: true, message: "Password is required" },
+                required: { value: true, message: "Please Enter Password" },
                 minLength: { value: 6, message: "Min Length is 6" }
               })} />
 
