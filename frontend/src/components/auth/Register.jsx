@@ -17,6 +17,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
+          //Post Request to save data in database and withCredentials to have cookies set
       const response = await axios.post("http://localhost:3000/api/auth/register", data,{
         withCredentials: true 
       });

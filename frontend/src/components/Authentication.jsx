@@ -1,3 +1,5 @@
+//To send the user to their location based on their role
+
 import React from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 

@@ -1,3 +1,5 @@
+//This is the error Page
+
 export default function ErrorPage() {
     return (
         <div id="error-page">

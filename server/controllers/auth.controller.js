@@ -64,7 +64,7 @@ const logoutUser = (req, res) => {
 }
 
 
-// Auth MiddleWare 
+// Auth MiddleWare - To make user authenticate even though page is refreshed
 const authMiddleware = async (req, res, next) => {
     const token =  req.cookies.token;
     if (!token) {

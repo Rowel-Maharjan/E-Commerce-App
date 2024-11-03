@@ -22,13 +22,15 @@ import axios from 'axios';
 
 function App() {
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth)
+  const { isAuthenticated, user } = useSelector((state) => state.auth)  //To obtain the value of state
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(checkAuth())
-  }, [dispatch])
+  }, [dispatch])    //To get the get request when page is refreshed.. This is done
 
+
+  // Another Method to make isAuthenticated = true even though page is refreshed
   // const authenticate = async () => {
   //   const response = await axios.get("http://localhost:3000/api/auth/checkauth",
   //     {
@@ -37,7 +39,6 @@ function App() {
   //   return response.data
 
   // }
-
 
   // useEffect(() => {
   //    authenticate().then((response)=>{

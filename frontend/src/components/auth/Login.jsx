@@ -15,6 +15,7 @@ const Login = () => {
   const dispatch = useDispatch()
 
   const onSubmit = async (data) => {
+    //Post Request to retrieve data from database and withCredentials to have cookies set. To check if user already exits in database and on the basis of it. verifying the user
     const response = await axios.post("http://localhost:3000/api/auth/login", data, {
         withCredentials: true 
     });

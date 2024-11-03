@@ -8,7 +8,9 @@ const authrouter = express.Router();
 authrouter.post("/register", registerUser)
 authrouter.post("/login", loginUser)
 authrouter.post("/logout", logoutUser)
-authrouter.get("/checkauth", authMiddleware, (req,res)=>{
+
+//To send getrequest to obtain the status of user when page is refreshed
+authrouter.get("/checkauth", authMiddleware, (req,res)=>{   
     const user = req.user;
     res.status(200).send({
         success: true,
