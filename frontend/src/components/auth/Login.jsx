@@ -15,7 +15,9 @@ const Login = () => {
   const dispatch = useDispatch()
 
   const onSubmit = async (data) => {
-    const response = await axios.post("http://localhost:3000/api/auth/login", data);
+    const response = await axios.post("http://localhost:3000/api/auth/login", data, {
+        withCredentials: true 
+    });
     if (response.data.success) {
       if (response.data.password) {
         dispatch(loginUser(response.data.user))
@@ -32,7 +34,6 @@ const Login = () => {
         description: "User Doesn't Exist! Please register first",
       })
       navigate("/auth/register")
-
     }
   }
   return (

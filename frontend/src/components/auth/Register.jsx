@@ -17,7 +17,9 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/register", data);
+      const response = await axios.post("http://localhost:3000/api/auth/register", data,{
+        withCredentials: true 
+      });
       await dispatch(registerUser())
       console.log(response)
       if (response.data.success) {

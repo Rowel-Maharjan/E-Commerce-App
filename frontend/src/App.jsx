@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ErrorPage from './components/ErrorPage.jsx';
 import AuthLayout from './components/auth/AuthLayout.jsx';
 import Login from './components/auth/Login.jsx';
@@ -16,11 +16,35 @@ import Home from './components/shoppingView/Home.jsx';
 import Listing from './components/shoppingView/Listing.jsx';
 import Authentication from './components/Authentication.jsx';
 import { Route, Routes } from 'react-router-dom';
-
+import { checkAuth } from './store/auth-slice/index.js';
+import axios from 'axios';
 
 
 function App() {
+
   const { isAuthenticated, user } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(checkAuth())
+  }, [dispatch])
+
+  // const authenticate = async () => {
+  //   const response = await axios.get("http://localhost:3000/api/auth/checkauth",
+  //     {
+  //       withCredentials: true
+  //     })
+  //   return response.data
+
+  // }
+
+
+  // useEffect(() => {
+  //    authenticate().then((response)=>{
+  //      dispatch(checkAuth(response))
+  //    })
+  // }, [dispatch])
+
 
   return (
     <>

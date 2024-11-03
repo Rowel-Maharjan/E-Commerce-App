@@ -8,12 +8,10 @@ import { Toaster } from "@/components/ui/toaster"
 import App from './App';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-        <Toaster />
-      </Provider>
-    </BrowserRouter>
-  </StrictMode>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+      <Toaster />
+    </Provider>
+  </BrowserRouter>
 )
