@@ -5,6 +5,12 @@ import { Button } from './ui/button';
 
 function CommonForm({ formControls, buttonText, onSubmit }) {
     const { register, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm();
+
+    function handleFormSubmit(data) {
+        onSubmit(data);
+        reset();
+    }
+
     function renderInputByComponentType(getControlItem) {
         const { componentType, label, name, placeholder, type, options } = getControlItem;
 
@@ -60,7 +66,7 @@ function CommonForm({ formControls, buttonText, onSubmit }) {
     }
 
     return (
-        <form className='flex flex-col gap-2 text-black' onSubmit={handleSubmit(onSubmit)}>
+        <form className='flex flex-col gap-2 text-black' onSubmit={handleSubmit(handleFormSubmit)}>
             {formControls.map((controlItem) => (
                 <div key={controlItem.name} className="grid w-full items-center gap-1.5">
                     <Label>{controlItem.label}</Label>
