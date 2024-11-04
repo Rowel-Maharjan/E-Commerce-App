@@ -17,4 +17,7 @@ Frontend:
     axios - making HTTP requests from a web browser     
     react-router-dom - for react routing
     Tailwind - Used to build clean UI
+    shadcn ui - Used for components
+    Lucide - icons
+    
     
