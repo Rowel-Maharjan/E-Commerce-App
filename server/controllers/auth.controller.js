@@ -75,8 +75,10 @@ const authMiddleware = async (req, res, next) => {
     }
 
     try {
+        //Got the info stored in cookie i.e email,role,id
         const decoded = jwt.verify(token, 'CLIENT_SECRET_KEY');
         req.user = decoded;
+        console.log(decoded)
         next();
 
     } catch (error) {

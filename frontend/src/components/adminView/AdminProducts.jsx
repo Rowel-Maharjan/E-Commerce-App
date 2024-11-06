@@ -1,23 +1,44 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { addProductFormElements } from '../config';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
 import CommonForm from '../form';
 import ImageUpload from './ImageUpload';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllProducts, addNewProduct } from '@/store/admin/product.slice';
+import { useToast } from "@/hooks/use-toast"
 
 const AdminProducts = () => {
   const [openCreateProduct, setOpenCreateProduct] = useState(false)
   const [imageFile, setImageFile] = useState(null)
   const [uploadedImageURL, setUploadedImageURL] = useState('')
   const [imageLoadingState, setImageLoadingState] = useState(false)
+  const dispatch = useDispatch()
+  const { productList } = useSelector((state) => state.adminProducts)
+  const { toast } = useToast()
 
 
-  const onSubmit = async (data) => {
-    setImageFile(null)
+  const onSubmit = (data) => {
     data.image = uploadedImageURL;
-    console.log(data);
+    dispatch(addNewProduct(data)).then(data => {
+      if (data.payload.success) {
+        dispatch(fetchAllProducts())
+        setImageFile(null);
+        setOpenCreateProduct(false);
+        toast({
+          description: "Product Added Successfully",
+          className: "bg-black text-white",
+          duration: 2500
+        })
+      }
+    })
   }
+
+  useEffect(() => {
+    dispatch(fetchAllProducts())
+  }, [dispatch])
+
+  console.log(productList)
 
   return <Fragment>
     <div className='mb-5 w-full flex justify-end'>

@@ -4,6 +4,7 @@ import { Input } from '../ui/input'
 import { FileIcon, UploadCloudIcon, X } from 'lucide-react'
 import { Button } from '../ui/button'
 import axios from 'axios'
+import { Skeleton } from '../ui/skeleton'
 
 const ImageUpload = ({ imageLoadingState, setImageLoadingState, imageFile, setImageFile, uploadedImageURL, setUploadedImageURL }) => {
 
@@ -57,21 +58,21 @@ const ImageUpload = ({ imageLoadingState, setImageLoadingState, imageFile, setIm
                     <Label htmlFor="image-upload" className="flex flex-col items-center justify-center h-44 cursor-pointer">
                         <UploadCloudIcon className='w-10 h-10 text-muted-foreground mb-2 ' />
                         <span>Drag & drop or clock to upload image</span>
-                    </Label> : <div className='flex items-center justify-between p-2'>
-                        <div className='flex items-center'>
-                            <FileIcon className='w-8 h-8 text-primary mr-2' />
-                        </div>
-                        <p className='text-sm font-medium'>{imageFile.name}</p>
+                    </Label> : imageLoadingState ?
+                        <Skeleton className='bg-gray-500 h-10' /> :
+                        <div className='flex items-center justify-between p-2'>
+                            <div className='flex items-center'>
+                                <FileIcon className='w-8 h-8 text-primary mr-2' />
+                            </div>
+                            <p className='text-sm font-medium'>{imageFile.name}</p>
 
-                        {/* {imageLoadingState ? <div>Loading...</div> : <img src={uploadedImageURL} alt="" /> } */}
 
+                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" onClick={handleRemoveImage}>
+                                <X className='w-4 h-4' />
+                                <span className='sr-only'>Remove File</span>
+                            </Button>
 
-                        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" onClick={handleRemoveImage}>
-                            <X className='w-4 h-4' />
-                            <span className='sr-only'>Remove File</span>
-                        </Button>
-
-                    </div>}
+                        </div>}
             </div>
         </div>
     )

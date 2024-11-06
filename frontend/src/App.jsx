@@ -18,7 +18,6 @@ import Authentication from './components/Authentication.jsx';
 import { Route, Routes } from 'react-router-dom';
 import { checkAuth } from './store/auth-slice/index.js';
 import axios from 'axios';
-import { SkeletonCard } from './components/Loading.jsx';
 
 
 function App() {
@@ -28,7 +27,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuth())
-  }, [dispatch])    //To get the get request when page is refreshed.. This is done
+  }, [dispatch])    //To get the get-request when page is refreshed.. This is done
 
 
   // Another Method to make isAuthenticated = true even though page is refreshed

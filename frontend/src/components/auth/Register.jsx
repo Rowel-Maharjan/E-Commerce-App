@@ -17,12 +17,11 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-          //Post Request to save data in database and withCredentials to have cookies set
-      const response = await axios.post("http://localhost:3000/api/auth/register", data,{
-        withCredentials: true 
+      //Post Request to save data in database and withCredentials to have cookies set
+      const response = await axios.post("http://localhost:3000/api/auth/register", data, {
+        withCredentials: true
       });
       await dispatch(registerUser())
-      console.log(response)
       if (response.data.success) {
         reset()
         navigate("/auth/login")
@@ -32,7 +31,7 @@ const Register = () => {
           duration: 2500
         })
       }
-      else{
+      else {
         toast({
           variant: "destructive",
           description: "Email Already Exist.",
@@ -41,7 +40,7 @@ const Register = () => {
 
     }
     catch (error) {
-      
+
       console.log(error)
     }
   }
