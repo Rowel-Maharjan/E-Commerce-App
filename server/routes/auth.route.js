@@ -10,7 +10,7 @@ authrouter.post("/login", loginUser)
 authrouter.get("/logout", logoutUser)
 
 //To send getrequest to obtain the status of user when page is refreshed
-authrouter.get("/checkauth", authMiddleware, (req,res)=>{   
+authrouter.get("/checkauth", authMiddleware, (req, res) => {
     const user = req.user;
     res.status(200).send({
         success: true,

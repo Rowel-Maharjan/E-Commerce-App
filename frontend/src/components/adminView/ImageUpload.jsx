@@ -1,10 +1,11 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { FileIcon, UploadCloudIcon, X } from 'lucide-react'
 import { Button } from '../ui/button'
+import axios from 'axios'
 
-const ImageUpload = ({ imageFile, setImageFile, uploadedImageURL, setUploadedImageURL }) => {
+const ImageUpload = ({ setImageLoadingState, imageFile, setImageFile, uploadedImageURL, setUploadedImageURL }) => {
 
     const inputRef = useRef(null)
 
@@ -13,7 +14,6 @@ const ImageUpload = ({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
         if (selectedFile)
             setImageFile(selectedFile)
         event.target.value = null; //Reset the input value to allow re-selecting the same file
-
     }
 
     function handleDragOver(event) {
@@ -30,6 +30,28 @@ const ImageUpload = ({ imageFile, setImageFile, uploadedImageURL, setUploadedIma
     function handleRemoveImage() {
         setImageFile(null)
     }
+
+    async function uploadToCloudinary() {
+        setImageLoadingState(true)
+        const data = new FormData();   //While dealing with file uplaods with libraries like axios or fetch
+        data.append('my_file', imageFile)
+
+        const response = await axios.post("http://localhost:3000/api/admin/products/imageupload", data)
+        if (response.data.success) {
+            setUploadedImageURL(response.data.result.url);
+            setImageLoadingState(false)
+        }
+    }
+
+    useEffect(() => {
+        if (!imageFile !== null) uploadToCloudinary()
+
+    }, [imageFile])
+
+
+
+
+
     return (
         <div onDragOver={handleDragOver} onDrop={handleDrop} className='w-full mt-4 max-w-md mx-auto'>
             <Label className="text-lg font-semibold mb-2 block" >Upload Image</Label>
