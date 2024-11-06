@@ -5,7 +5,7 @@ import { FileIcon, UploadCloudIcon, X } from 'lucide-react'
 import { Button } from '../ui/button'
 import axios from 'axios'
 
-const ImageUpload = ({ setImageLoadingState, imageFile, setImageFile, uploadedImageURL, setUploadedImageURL }) => {
+const ImageUpload = ({ imageLoadingState, setImageLoadingState, imageFile, setImageFile, uploadedImageURL, setUploadedImageURL }) => {
 
     const inputRef = useRef(null)
 
@@ -29,13 +29,13 @@ const ImageUpload = ({ setImageLoadingState, imageFile, setImageFile, uploadedIm
 
     function handleRemoveImage() {
         setImageFile(null)
+        setUploadedImageURL(null)
     }
 
     async function uploadToCloudinary() {
         setImageLoadingState(true)
         const data = new FormData();   //While dealing with file uplaods with libraries like axios or fetch
         data.append('my_file', imageFile)
-
         const response = await axios.post("http://localhost:3000/api/admin/products/imageupload", data)
         if (response.data.success) {
             setUploadedImageURL(response.data.result.url);
@@ -45,12 +45,7 @@ const ImageUpload = ({ setImageLoadingState, imageFile, setImageFile, uploadedIm
 
     useEffect(() => {
         if (!imageFile !== null) uploadToCloudinary()
-
     }, [imageFile])
-
-
-
-
 
     return (
         <div onDragOver={handleDragOver} onDrop={handleDrop} className='w-full mt-4 max-w-md mx-auto'>
@@ -67,6 +62,9 @@ const ImageUpload = ({ setImageLoadingState, imageFile, setImageFile, uploadedIm
                             <FileIcon className='w-8 h-8 text-primary mr-2' />
                         </div>
                         <p className='text-sm font-medium'>{imageFile.name}</p>
+
+                        {/* {imageLoadingState ? <div>Loading...</div> : <img src={uploadedImageURL} alt="" /> } */}
+
 
                         <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" onClick={handleRemoveImage}>
                             <X className='w-4 h-4' />

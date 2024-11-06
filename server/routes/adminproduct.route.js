@@ -7,10 +7,14 @@ import multer from "multer"
 const storage = new multer.memoryStorage()
 const upload = multer({ storage: storage })
 
-const { imageupload } = adminproductController;
+const { imageupload, addProduct, fetchAllProducts, editProduct, deleteProduct } = adminproductController;
 
 const adminproductroter = express.Router()
 
 adminproductroter.post("/imageupload", upload.single('my_file'), imageupload);
+adminproductroter.post("/addproduct", addProduct);
+adminproductroter.get("/fetchallproduct", fetchAllProducts);
+adminproductroter.put("/editproduct/:id", editProduct);
+adminproductroter.delete("/deleteproduct/:id", deleteProduct);
 
 export default adminproductroter

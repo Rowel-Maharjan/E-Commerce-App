@@ -38,5 +38,4 @@ mongoose.connect("mongodb://localhost:27017/E-Commerce")
 
 app.get('/', async (req, res) => {
     res.send("Hello World")
-
 })
