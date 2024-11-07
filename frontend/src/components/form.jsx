@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Label } from './ui/label'
 import { useForm } from "react-hook-form";
 import { Button } from './ui/button';
 
-function CommonForm({ formControls, buttonText, onSubmit }) {
+function CommonForm({ formControls, buttonText, onSubmit, currentEditedProduct = null }) {
     const { register, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm();
 
     function handleFormSubmit(data) {
         onSubmit(data);
         reset();
     }
+
+
+    //Fill the form for edited Product
+    useEffect(() => {
+        if (currentEditedProduct)
+            reset(currentEditedProduct)
+        else
+            reset()
+    }, [currentEditedProduct, reset])
+
 
     function renderInputByComponentType(getControlItem) {
         const { componentType, label, name, placeholder, type, options } = getControlItem;
@@ -20,6 +30,7 @@ function CommonForm({ formControls, buttonText, onSubmit }) {
                     <input
                         className="border border-input px-3 py-2 text-sm placeholder:text-muted-foreground rounded-md focus:outline-gray-600 bg-[#e8f0fe] mb-1"
                         placeholder={placeholder}
+                        step="any" 
                         type={type}
                         {...register(name, {
                             required: { value: true, message: `Please Enter ${label}` },

@@ -16,7 +16,10 @@ export const fetchAllProducts = createAsyncThunk("/product/fetchallproducts", as
     return response.data;
 })
 
-export const editProduct = createAsyncThunk("/product/editproduct", async (id, productData) => {
+
+//This part is tricky. Need to send as a parameter......................Look Down, cant do (id, productData).
+//Now check AdminProducts.jsx how I dispatch
+export const editProduct = createAsyncThunk("/product/editproduct", async ({id, productData}) => { 
     const response = await axios.put(`http://localhost:3000/api/admin/products/editproduct/${id}`, productData)
     return response.data;
 

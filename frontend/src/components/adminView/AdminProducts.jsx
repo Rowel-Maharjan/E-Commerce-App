@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Button } from '../ui/button'
 import { addProductFormElements } from '../config';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet'
 import CommonForm from '../form';
 import ImageUpload from './ImageUpload';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllProducts, addNewProduct } from '@/store/admin/product.slice';
+import { fetchAllProducts, addNewProduct, editProduct } from '@/store/admin/product.slice';
 import { useToast } from "@/hooks/use-toast"
 import ProductTile from './ProductTile';
+
 
 const AdminProducts = () => {
   const [openCreateProduct, setOpenCreateProduct] = useState(false)
@@ -20,21 +21,59 @@ const AdminProducts = () => {
   const { toast } = useToast()
 
 
+
   const onSubmit = (data) => {
-    data.image = uploadedImageURL;
-    dispatch(addNewProduct(data)).then(data => {
-      if (data.payload.success) {
-        dispatch(fetchAllProducts())
-        setImageFile(null);
-        setOpenCreateProduct(false);
-        toast({
-          description: "Product Added Successfully",
-          className: "bg-black text-white",
-          duration: 2500
+    data.image = uploadedImageURL
+
+    //To add New Product
+    if (currentEditedProduct === null) {
+      dispatch(addNewProduct(data)).then(data => {
+        try {
+          if (data.payload.success) {
+            dispatch(fetchAllProducts())
+            setImageFile(null);
+            setUploadedImageURL(null)
+            setOpenCreateProduct(false);
+            toast({
+              description: "Product Added Successfully",
+              className: "bg-black text-white",
+              duration: 2500
+            })
+          }
+          
+        } catch (error) {
+          toast({
+            variant: "destructive",
+            description: "Failed!!! Upload Image to Add Product",
+            duration: 3000
         })
-      }
-    })
-  }
+          
+        }
+        
+
+         
+
+      })
+    }
+
+    //To update edited product
+    else {
+      dispatch(editProduct({ id: currentEditedProduct._id, productData: data })).then((data) => {
+        if (data.payload.success) {
+          dispatch(fetchAllProducts());
+          setImageFile(null);
+          setUploadedImageURL(null)
+          setOpenCreateProduct(false);
+          setCurrentEditedProduct(null)
+          toast({
+            description: "Product Updated Successfully", // Changed message for clarity
+            className: "bg-black text-white",
+            duration: 2500,
+          });
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchAllProducts())
@@ -51,21 +90,28 @@ const AdminProducts = () => {
       {
         productList && productList.length > 0 ?
           productList.map(product => (
-            <ProductTile setOpenCreateProduct={setOpenCreateProduct} setCurrentEditedProduct={setCurrentEditedProduct} currentEditedProduct={currentEditedProduct} key={product._id} product={product} />
+            <ProductTile setOpenCreateProduct={setOpenCreateProduct} setCurrentEditedProduct={setCurrentEditedProduct} currentEditedProduct={currentEditedProduct} key={product._id} product={product} setUploadedImageURL={setUploadedImageURL} />
           )) : <div>No Products to show</div>
       }
 
     </div>
 
-    <Sheet open={openCreateProduct} onOpenChange={setOpenCreateProduct} >
+    <Sheet open={openCreateProduct} onOpenChange={() => {
+      setOpenCreateProduct(false)    //Another way to do it
+      setUploadedImageURL(null)
+      setCurrentEditedProduct(null)
+
+    }} >
       <SheetContent side="right" className="overflow-auto">
         <SheetHeader>
-          <SheetTitle>Add New Product</SheetTitle>
+          <SheetTitle className='text-2xl'>
+            {currentEditedProduct === null ? "Add New Product" : "Edit Product"}
+          </SheetTitle>
         </SheetHeader>
 
         <ImageUpload imageLoadingState={imageLoadingState} setImageLoadingState={setImageLoadingState} imageFile={imageFile} setImageFile={setImageFile} uploadedImageURL={uploadedImageURL} setUploadedImageURL={setUploadedImageURL} />
         <div className='py-4'>
-          <CommonForm onSubmit={onSubmit} formControls={addProductFormElements} buttonText={"Add Product"} />
+          <CommonForm onSubmit={onSubmit} uploadedImageURL={uploadedImageURL} formControls={addProductFormElements} buttonText={currentEditedProduct === null ? "Add Product" : "Update Product"} currentEditedProduct={currentEditedProduct} />
         </div>
 
       </SheetContent>
