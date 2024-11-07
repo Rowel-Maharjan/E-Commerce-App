@@ -7,6 +7,7 @@ import ImageUpload from './ImageUpload';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllProducts, addNewProduct } from '@/store/admin/product.slice';
 import { useToast } from "@/hooks/use-toast"
+import ProductTile from './ProductTile';
 
 const AdminProducts = () => {
   const [openCreateProduct, setOpenCreateProduct] = useState(false)
@@ -38,13 +39,20 @@ const AdminProducts = () => {
     dispatch(fetchAllProducts())
   }, [dispatch])
 
-  console.log(productList)
 
   return <Fragment>
     <div className='mb-5 w-full flex justify-end'>
       <Button onClick={() => setOpenCreateProduct(true)} >Add New Product</Button>
     </div>
-    <div className='gird gap-4 md:grid-cols-3 lg:grid-cols-4'>
+
+
+    <div className='grid gap-3 md:grid-cols-3 lg:grid-cols-4'>
+      {
+        productList && productList.length > 0 ?
+          productList.map(product => (
+            <ProductTile key={product._id} product={product} />
+          )) : null
+      }
 
     </div>
 
