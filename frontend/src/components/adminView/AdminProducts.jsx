@@ -16,6 +16,7 @@ const AdminProducts = () => {
   const [imageLoadingState, setImageLoadingState] = useState(false)
   const dispatch = useDispatch()
   const { productList } = useSelector((state) => state.adminProducts)
+  const [currentEditedProduct, setCurrentEditedProduct] = useState(null)
   const { toast } = useToast()
 
 
@@ -50,8 +51,8 @@ const AdminProducts = () => {
       {
         productList && productList.length > 0 ?
           productList.map(product => (
-            <ProductTile key={product._id} product={product} />
-          )) : null
+            <ProductTile setOpenCreateProduct={setOpenCreateProduct} setCurrentEditedProduct={setCurrentEditedProduct} currentEditedProduct={currentEditedProduct} key={product._id} product={product} />
+          )) : <div>No Products to show</div>
       }
 
     </div>

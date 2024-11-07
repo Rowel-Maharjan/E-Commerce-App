@@ -1,8 +1,30 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { deleteProduct, fetchAllProducts } from '@/store/admin/product.slice'
+import { toast } from '@/hooks/use-toast'
 
-const ProductTile = ({ product }) => {
+const ProductTile = ({ product, setCurrentEditedProduct, currentEditedProduct, setOpenCreateProduct }) => {
+    const dispatch = useDispatch()
+
+    const handleDelete = (id) => {
+        dispatch(deleteProduct(id)).then(() => {
+            dispatch(fetchAllProducts());
+        })
+        toast({
+            variant: "destructive",
+            description: "Product Deleted Successfully",
+            duration: 2500
+        })
+    }
+
+    const handleEdit = (product) => {
+        setCurrentEditedProduct(product);
+        setOpenCreateProduct(true);
+
+    }
+
     return (
         <Card className='w-full max-w-sm mx-auto'>
             <div>
@@ -20,8 +42,8 @@ const ProductTile = ({ product }) => {
                     </div>
                 </CardContent>
                 <CardFooter className='flex justify-between items-center p-3' >
-                    <Button>Edit</Button>
-                    <Button>Delete</Button>
+                    <Button onClick={() => handleEdit(product)} >Edit</Button>
+                    <Button onClick={() => handleDelete(product._id)}>Delete</Button>
                 </CardFooter>
             </div>
         </Card>
