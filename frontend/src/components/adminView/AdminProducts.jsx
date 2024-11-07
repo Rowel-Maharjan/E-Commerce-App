@@ -40,19 +40,14 @@ const AdminProducts = () => {
               duration: 2500
             })
           }
-          
+
         } catch (error) {
           toast({
             variant: "destructive",
             description: "Failed!!! Upload Image to Add Product",
             duration: 3000
-        })
-          
+          })
         }
-        
-
-         
-
       })
     }
 
@@ -113,7 +108,6 @@ const AdminProducts = () => {
         <div className='py-4'>
           <CommonForm onSubmit={onSubmit} uploadedImageURL={uploadedImageURL} formControls={addProductFormElements} buttonText={currentEditedProduct === null ? "Add Product" : "Update Product"} currentEditedProduct={currentEditedProduct} />
         </div>
-
       </SheetContent>
     </Sheet>
   </Fragment>

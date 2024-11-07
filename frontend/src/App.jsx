@@ -59,7 +59,6 @@ function App() {
         <Route path='/auth' element={<Authentication isAuthenticated={isAuthenticated} user={user}>
           <AuthLayout />
         </Authentication>}>
-          <Route path="auth" element={<Login />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
