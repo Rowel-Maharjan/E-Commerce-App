@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Label } from './ui/label'
 import { useForm } from "react-hook-form";
 import { Button } from './ui/button';
+import { Eye, EyeOff } from 'lucide-react';
 
 function CommonForm({ formControls, buttonText, onSubmit, currentEditedProduct = null }) {
     const { register, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm();
@@ -11,6 +12,7 @@ function CommonForm({ formControls, buttonText, onSubmit, currentEditedProduct =
         reset();
     }
 
+    const [showPassword, setShowPassword] = useState(false)
 
     //Fill the form for edited Product
     useEffect(() => {
@@ -23,19 +25,31 @@ function CommonForm({ formControls, buttonText, onSubmit, currentEditedProduct =
 
     function renderInputByComponentType(getControlItem) {
         const { componentType, label, name, placeholder, type, options } = getControlItem;
+        const isPassword = type === "password";
 
         switch (componentType) {
             case "input":
                 return (
-                    <input
-                        className="border border-input px-3 py-2 text-sm placeholder:text-muted-foreground rounded-md focus:outline-gray-600 bg-[#e8f0fe] mb-1"
-                        placeholder={placeholder}
-                        step="any" 
-                        type={type}
-                        {...register(name, {
-                            required: { value: true, message: `Please Enter ${label}` },
-                        })}
-                    />
+                    <div className="relative">
+                        <input
+                            className="border border-input px-3 py-2 text-sm placeholder:text-muted-foreground rounded-md focus:outline-gray-600 bg-[#e8f0fe] mb-1 w-full"
+                            placeholder={placeholder}
+                            step="any"
+                            type={isPassword && !showPassword ? "password" : "text"}
+                            {...register(name, {
+                                required: { value: true, message: `Please Enter ${label}` },
+                            })}
+                        />
+                        {isPassword && (
+                            <button
+                                type="button"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <EyeOff /> : <Eye />}
+                            </button>
+                        )}
+                    </div>
                 );
 
             case "textarea":
