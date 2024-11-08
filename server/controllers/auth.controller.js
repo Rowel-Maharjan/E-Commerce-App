@@ -56,11 +56,12 @@ const loginUser = async (req, res) => {
 }
 
 // Logout User 
-const logoutUser = (req, res) => {
-    res.clearCookie("token").send({
-        success: true,
-        message: "Logged out successfully"
-    })
+const logoutUser = (req, res) => {   //Cache-control is very imp in case of logout
+    res.clearCookie("token").set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate")
+        .send({
+            success: true,
+            message: "Logged out successfully"
+        })
 }
 
 
@@ -78,7 +79,6 @@ const authMiddleware = async (req, res, next) => {
         //Got the info stored in cookie i.e email,role,id
         const decoded = jwt.verify(token, 'CLIENT_SECRET_KEY');
         req.user = decoded;
-        console.log(decoded)
         next();
 
     } catch (error) {

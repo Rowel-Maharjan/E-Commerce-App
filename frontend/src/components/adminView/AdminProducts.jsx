@@ -21,7 +21,6 @@ const AdminProducts = () => {
   const { toast } = useToast()
 
 
-
   const onSubmit = (data) => {
     data.image = uploadedImageURL
 

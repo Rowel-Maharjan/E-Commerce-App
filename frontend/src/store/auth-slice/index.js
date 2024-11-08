@@ -10,9 +10,14 @@ const initialState = {
 
 // AsyncThunk to get user Status such as their info and to make them authenticate even though the page is refreshed. Need to send the get request to receive the status of User.
 export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
+
   const response = await axios.get("http://localhost:3000/api/auth/checkauth",
     {
-      withCredentials: true
+      withCredentials: true,
+      headers: {
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
     })
 
   return response.data
@@ -22,7 +27,8 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
   const response = await axios.post("http://localhost:3000/api/auth/logout", {},
     {
       withCredentials: true
-    })
+    });
+
 
   return response.data
 
@@ -62,11 +68,13 @@ export const authSlice = createSlice({
         state.isLoading = false
       }).addCase(checkAuth.pending, (state, action) => {
         state.isLoading = true
+        state.isAuthenticated = false
       }).addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false
         state.user = null
         state.isAuthenticated = false
       }).addCase(logoutUser.fulfilled, (state) => {
+        console.log("I am done")
         state.isLoading = false,
           state.user = null,
           state.isAuthenticated = false

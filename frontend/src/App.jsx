@@ -15,15 +15,15 @@ import Checkout from './components/shoppingView/Checkout.jsx';
 import Home from './components/shoppingView/Home.jsx';
 import Listing from './components/shoppingView/Listing.jsx';
 import Authentication from './components/Authentication.jsx';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { checkAuth } from './store/auth-slice/index.js';
-import axios from 'axios';
 
 
 function App() {
 
   const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth)  //To obtain the value of state
   const dispatch = useDispatch()
+
 
   useEffect(() => {
     dispatch(checkAuth())
