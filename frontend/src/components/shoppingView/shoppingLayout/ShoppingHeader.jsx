@@ -3,14 +3,11 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-
 import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from 'lucide-react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { logoutUser } from '@/store/auth-slice'
-
-
 
 function MenuItems({ handleClose }) {
   return <nav className='flex flex-col mb-3 md:mb-0 md:items-center gap-6 md:gap-6 sm:gap-6 md:flex-row'>
@@ -57,15 +54,12 @@ function HeaderRightContent() {
   </div>
 }
 
-
-
 const ShoppingHeader = () => {
   const [openMenu, setOpenMenu] = useState(false)
 
   const handleClose = () => {
     setOpenMenu(false)
   }
-
 
   return (
     <div className='sticky top-0 z-40 w-full border-b bg-background'>
@@ -83,7 +77,7 @@ const ShoppingHeader = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs ">
-            <Link onClick={()=>setOpenMenu(false)} to="/shop/home" className='flex items-center gap-2 mb-5'>
+            <Link onClick={() => setOpenMenu(false)} to="/shop/home" className='flex items-center gap-2 mb-5'>
               <HousePlug className='h-6 w-6' />
               <span className='font-bold'>Ecommerce</span>
             </Link>
@@ -97,8 +91,6 @@ const ShoppingHeader = () => {
         <div className='hidden md:block'>
           <HeaderRightContent />
         </div>
-
-
       </div>
     </div>
   )

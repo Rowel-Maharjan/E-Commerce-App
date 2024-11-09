@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors";
 import authrouter from "./routes/auth.route.js";
 import adminproductroter from "./routes/adminproduct.route.js";
+import shopproductrouter from "./routes/shopproduct.route.js";
 
 
 const app = express()
@@ -22,7 +23,7 @@ app.use(express.json())
 
 app.use("/api/auth", authrouter)
 app.use("/api/admin/products", adminproductroter)
-
+app.use("/api/shop/products", shopproductrouter)
 
 mongoose.connect("mongodb://localhost:27017/E-Commerce")
     // mongoose.connect(process.env.MONGO_URI)  

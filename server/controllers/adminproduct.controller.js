@@ -5,10 +5,13 @@ import product from "../models/Product.js"
 //Upload Immage to Cloudinary
 const imageupload = async (req, res) => {
     try {
+        if (!req.file) {
+            console.log("No file uploaded yet");
+            return res.status(400).json({ error: "No file uploaded" });
+        }
         const b64 = Buffer.from(req.file.buffer).toString("base64")  //Multer provide file as a buffer
         const url = "data:" + req.file.mimetype + ";base64," + b64   //Format of url to send to cloudinary
         const result = await uploadImageToCloudinary(url)
-
         res.json({
             success: true,
             result,

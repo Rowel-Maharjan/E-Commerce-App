@@ -50,6 +50,4 @@ export const productSlice = createSlice({
 
 })
 
-// export const { incrementByAmount } = productSlice.actions
-
 export default productSlice.reducer

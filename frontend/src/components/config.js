@@ -87,36 +87,71 @@ export const shoppingViewHeaderMenuItems = [
     {
         id: 'home',
         label: "Home",
-        path : "/shop/home"
+        path: "/shop/home"
     },
     {
         id: 'men',
         label: "Men",
-        path : "/shop/listing"
+        path: "/shop/listing"
     },
     {
         id: 'women',
         label: "Women",
-        path : "/shop/listing"
+        path: "/shop/listing"
     },
     {
         id: 'kids',
         label: "Kids",
-        path : "/shop/listing"
+        path: "/shop/listing"
     },
     {
         id: 'accessories',
         label: "Accessories",
-        path : "/shop/listing"
+        path: "/shop/listing"
     },
     {
         id: 'footwear',
         label: "Footwear",
-        path : "/shop/listing"
+        path: "/shop/listing"
     },
     {
         id: 'electronics',
         label: "Electronics",
-        path : "/shop/listing"
+        path: "/shop/listing"
     },
 ]
+
+
+export const filterOptions = {
+    Category: [
+        { id: "men", label: "Men" },
+        { id: "women", label: "Women" },
+        { id: "kids", label: "Kids" },
+        { id: "accessories", label: "Accessories" },
+        { id: "footwear", label: "Footwear" },
+        { id: "electronics", label: "Electronics" },
+    ],
+
+    Brand: [
+        { id: "nike", label: "Nike" },
+        { id: "adidas", label: "Adidas" },
+        { id: "puma", label: "Puma" },
+        { id: "goldstar", label: "Goldstar" },
+        { id: "zara", label: "Zara" },
+        { id: "h&m", label: "H&M" },
+        { id: "apple", label: "Apple" },
+        { id: "samsung", label: "Samsung" },
+        { id: "oneplus", label: "OnePlus" },
+    ]
+}
+
+export const sortOptions = {
+    Price: [
+        { id: "lowtohigh", label: "Low to High" },
+        { id: "hightolow", label: "High to Low" },
+    ],
+    Title: [
+        { id: "atoz", label: "A to Z" },
+        { id: "ztoa", label: "Z to A" },
+    ]
+}

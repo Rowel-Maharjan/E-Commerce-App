@@ -24,7 +24,5 @@ async function uploadImageToCloudinary(file) {
 }
 
 
-
-
 export default { uploadImageToCloudinary }
 
