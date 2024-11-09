@@ -29,9 +29,7 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
       withCredentials: true
     });
 
-
   return response.data
-
 })
 
 export const authSlice = createSlice({

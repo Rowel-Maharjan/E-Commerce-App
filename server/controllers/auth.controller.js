@@ -33,9 +33,8 @@ const loginUser = async (req, res) => {
         if (!MatchPassword) {
             return res.status(200).send({ success: true, message: "User Exists but incorrect Password", password: false })
         }
-
         //jwt.sign() - Generates a new JWt
-        const token = jwt.sign({ id: User._id, email: User.email, role: User.role }, 'CLIENT_SECRET_KEY', { expiresIn: "60m" })
+        const token = jwt.sign({ id: User._id, email: User.email, role: User.role, username: User.username }, 'CLIENT_SECRET_KEY', { expiresIn: "60m" })
 
         res.cookie("token", token, { httpOnly: true, secure: false }).json({
             success: true,
@@ -44,11 +43,10 @@ const loginUser = async (req, res) => {
             user: {
                 email: User.email,
                 role: User.role,
-                id: User._id
+                id: User._id,
+                username: User.username
             }
         });
-
-
     }
     catch (error) {
         res.status(500).json({ message: error.message })
