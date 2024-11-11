@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Filter from './Filter'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { ArrowUpDownIcon } from 'lucide-react'
+import { ArrowUpDownIcon, Captions } from 'lucide-react'
 import { sortOptions } from '../config'
 import ProductTile from './ProductTile'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +12,36 @@ import { fetchAllFilteredProducts } from '@/store/shop/shop.slice'
 const Listing = () => {
   const dispatch = useDispatch()
   const { productList } = useSelector(state => state.shopProducts)
+  const [Sort, setSort] = useState({})
+  const [filter, setFilter] = useState({})
+
+  const handleSort = (value, keyItems) => {
+    setSort((prev) => ({
+      ...prev,
+      [keyItems]: value
+    }))
+    console.log(Sort)
+  }
+
+  const handleFilter = (filterOption, filterOptionId) => {
+    const cpyfilter = filter;
+    const existingOption = cpyfilter[filterOption] || [];
+    const updatedOptionId = existingOption.includes(filterOptionId) ?
+      existingOption.filter((Optionid) => Optionid != filterOptionId) :
+      [...existingOption, filterOptionId]
+
+    const updatedValue = {
+      ...cpyfilter,
+      [filterOption]: updatedOptionId
+    }
+    setFilter(updatedValue)
+    sessionStorage.setItem("filter", JSON.stringify(updatedValue))
+  };
+
+  useEffect(() => {
+    setFilter(JSON.parse(sessionStorage.getItem("filter")) || {}) //To get the filter Value in page reload
+  }, [])
+
 
   useEffect(() => {
     dispatch(fetchAllFilteredProducts())
@@ -19,7 +49,7 @@ const Listing = () => {
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6 p-4 md:p-6'>
-      <Filter />
+      <Filter filter={filter} setFilter={setFilter} handleFilter={handleFilter} />
 
       <div className='bg-background w-full rounded-lg shadow-sm'>
         <div className='p-4 border-b flex items-center justify-between'>
@@ -40,10 +70,10 @@ const Listing = () => {
                   Object.keys(sortOptions).map((keyItems) => <div key={keyItems}>
                     <DropdownMenuLabel >{keyItems}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuRadioGroup>
+                    <DropdownMenuRadioGroup value={Sort[keyItems]} onValueChange={(value) => handleSort(value, keyItems)}  >
                       {
                         sortOptions[keyItems].map(options =>
-                          <DropdownMenuRadioItem key={options.id}>{options.label}</DropdownMenuRadioItem>
+                          <DropdownMenuRadioItem value={options.id} key={options.id}>{options.label}</DropdownMenuRadioItem>
                         )
                       }
                     </DropdownMenuRadioGroup>

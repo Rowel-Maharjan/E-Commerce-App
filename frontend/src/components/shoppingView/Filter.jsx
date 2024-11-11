@@ -4,7 +4,7 @@ import { Label } from '../ui/label'
 import { Checkbox } from '../ui/checkbox'
 import { Separator } from '../ui/separator'
 
-const Filter = () => {
+const Filter = ({ filter, setFilter, handleFilter }) => {
     return (
         <div className='bg-background rounded-lg shadow-sm'>
             <div className='p-4 border-b '>
@@ -17,10 +17,13 @@ const Filter = () => {
                             <h3 className='text-base font-bold'>{keyItem}</h3>
                             <div className='grid gap-2 mt-2'>
                                 {
-                                    filterOptions[keyItem].map((item) => <Label key={item.id} className='flex items-center gap-2'>
-                                        <Checkbox />
-                                        <span>{item.label}</span>
-                                    </Label>)
+                                    filterOptions[keyItem].map((item) => <div key={item.id} className='flex items-center gap-2'>
+                                        <Checkbox checked={
+                                            //? is imp cause when filter not applied filter[keyItem] is undefined and undefined has no include property 
+                                            filter[keyItem]?.includes(item.id)
+                                        } id={item.id} onCheckedChange={() => handleFilter(keyItem, item.id)} />
+                                        <Label htmlFor={item.id} className='cursor-pointer' >{item.label}</Label>
+                                    </div>)
                                 }
                             </div>
                         </div>
