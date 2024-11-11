@@ -14,7 +14,7 @@ const Filter = ({ filter, setFilter, handleFilter }) => {
                 {
                     Object.keys(filterOptions).map((keyItem) => <Fragment key={keyItem}>
                         <div>
-                            <h3 className='text-base font-bold'>{keyItem}</h3>
+                            <h3 className='text-base font-bold'>{keyItem.charAt(0).toUpperCase() + keyItem.slice(1)}</h3>
                             <div className='grid gap-2 mt-2'>
                                 {
                                     filterOptions[keyItem].map((item) => <div key={item.id} className='flex items-center gap-2'>

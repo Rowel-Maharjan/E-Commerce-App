@@ -17,4 +17,4 @@ const getFilteredProducts = async (req, res) => {
     }
 }
 
-export default {getFilteredProducts}
+export default { getFilteredProducts }

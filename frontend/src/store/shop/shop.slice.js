@@ -10,7 +10,7 @@ export const fetchAllFilteredProducts = createAsyncThunk("/product/fetchallfilte
     const response = await axios.get("http://localhost:3000/api/shop/products/fetchallproduct")
     return response.data;
 })
-    
+
 export const shoppingProductSlice = createSlice({
     name: 'shoppingProducts',
     initialState,
