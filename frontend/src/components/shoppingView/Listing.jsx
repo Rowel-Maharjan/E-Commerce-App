@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react'
 import Filter from './Filter'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { ArrowUpDownIcon, Captions, Coins } from 'lucide-react'
+import { ArrowUpDownIcon } from 'lucide-react'
 import { sortOptions } from '../config'
 import ProductTile from './ProductTile'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllFilteredProducts } from '@/store/shop/shop.slice'
 import { useSearchParams } from 'react-router-dom'
+import ProductDetails from './ProductDetails'
 
 const Listing = () => {
   const dispatch = useDispatch()
-  const { productList } = useSelector(state => state.shopProducts)
+  const { productList, productDetails } = useSelector(state => state.shopProducts)
   const [Sort, setSort] = useState({})
   const [filter, setFilter] = useState({})
   const [searchParams, setSearchParams] = useSearchParams()
-  const [query, setQuery] = useState(null)
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false)
 
   const handleSort = (value) => {
     setSort(value)
   }
-
 
   const handleFilter = (filterOption, filterOptionId) => {
     const cpyfilter = filter;
@@ -41,6 +41,12 @@ const Listing = () => {
     dispatch(fetchAllFilteredProducts({ filterParams: filter, sortParams: Sort }))
   }, [dispatch, Sort, filter])
 
+  useEffect(() => {
+    if (productDetails)
+      setOpenDetailsDialog(true)
+  }, [productDetails])
+
+
 
   useEffect(() => {
     setSort("atoz")
@@ -60,12 +66,11 @@ const Listing = () => {
       }
     }
     const finalParams = queryParams.join("&") //To join the elements of an array with &
-    setQuery(finalParams)
     setSearchParams(finalParams)
   }, [filter])
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6'>
+    <div className='grid grid-cols-1 sm:grid-cols-[150px_1fr] md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6'>
       <Filter filter={filter} setFilter={setFilter} handleFilter={handleFilter} />
 
       <div className='bg-background w-full rounded-lg shadow-sm'>
@@ -99,10 +104,11 @@ const Listing = () => {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
           {
             productList && productList.length > 0 ?
-              productList.map(product => <ProductTile key={product._id} product={product} />) : <div className='text-lg font-bold'>No Products to show</div>
+              productList.map(product => <ProductTile key={product._id} product={product} setOpenDetailsDialog={setOpenDetailsDialog} />) : <div className='text-lg font-bold'>No Products to show</div>
           }
         </div>
       </div>
+      <ProductDetails open={openDetailsDialog} setOpen={setOpenDetailsDialog} productDetails={productDetails} />
     </div>
   )
 }

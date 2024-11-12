@@ -2,15 +2,22 @@ import React from 'react'
 import { Card, CardContent, CardFooter } from '../ui/card'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
+import { useDispatch } from 'react-redux'
+import { fetchFilteredProductDetails } from '@/store/shop/shop.slice'
 
 const ProductTile = ({ product }) => {
+    const dispatch = useDispatch()
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-      }
-      
+    }
+
+    const handleProductDialog = (id) => {
+        dispatch(fetchFilteredProductDetails(id))
+    }
+
     return (
         <Card className="w-full max-w-sm mx-auto" >
-            <div>
+            <div onClick={() => handleProductDialog(product._id)}>
                 <div className='relative'>
                     <img src={product.image} alt="product.title" className='w-full h-[300px] object-cover rounded-t-lg' />
                     {

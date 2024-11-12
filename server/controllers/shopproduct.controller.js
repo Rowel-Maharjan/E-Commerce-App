@@ -43,4 +43,28 @@ const getFilteredProducts = async (req, res) => {
     }
 }
 
-export default { getFilteredProducts }
+const getFilteredProductDetails = async (req, res) => {
+    try {
+        const { id } = req.params
+        const fetchProducts = await product.findById(id);
+        if (!fetchProducts)
+            res.status(404).json({
+                success: false,
+                message: "Product Not Found"
+            })
+
+        res.status(200).send({
+            success: true,
+            product: fetchProducts
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.json({
+            success: false,
+            message: "Error Occured"
+        })
+    }
+}
+
+export default { getFilteredProducts, getFilteredProductDetails }

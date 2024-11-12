@@ -3,13 +3,19 @@ import axios from 'axios'
 
 const initialState = {
     isLoading: false,
-    productList: []
+    productList: [],
+    productDetails: null
 }
 
 export const fetchAllFilteredProducts = createAsyncThunk("/product/fetchallfilteredproducts", async ({ filterParams, sortParams }) => {
     const queryParams = { ...filterParams, sortBy: sortParams }
     const finalQuery = new URLSearchParams(queryParams)
     const response = await axios.get(`http://localhost:3000/api/shop/products/fetchallproduct/?${finalQuery}`)
+    return response.data;
+})
+
+export const fetchFilteredProductDetails = createAsyncThunk("/product/fetchfilteredproductdetails", async (id) => {
+    const response = await axios.get(`http://localhost:3000/api/shop/products/fetchallproduct/${id}`)
     return response.data;
 })
 
@@ -27,6 +33,9 @@ export const shoppingProductSlice = createSlice({
             }).addCase(fetchAllFilteredProducts.rejected, (state) => {
                 state.isLoading = false
                 state.productList = []
+            }).addCase(fetchFilteredProductDetails.fulfilled, (state, action) => {
+                state.productDetails = action.payload.product,
+                    state.isLoading = false
             })
     }
 
