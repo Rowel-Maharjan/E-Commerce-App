@@ -15,6 +15,7 @@ const Listing = () => {
   const [Sort, setSort] = useState({})
   const [filter, setFilter] = useState({})
   const [searchParams, setSearchParams] = useSearchParams()
+  const [query, setQuery] = useState(null)
 
   const handleSort = (value) => {
     setSort(value)
@@ -36,13 +37,13 @@ const Listing = () => {
     sessionStorage.setItem("filter", JSON.stringify(updatedValue))
   };
 
-  useEffect(() => { 
-    dispatch(fetchAllFilteredProducts())
-  }, [dispatch])
+  useEffect(() => {
+    dispatch(fetchAllFilteredProducts({ filterParams: filter, sortParams: Sort }))
+  }, [dispatch, Sort, filter])
 
 
   useEffect(() => {
-    setSort("lowtohigh")
+    setSort("atoz")
     setFilter(JSON.parse(sessionStorage.getItem("filter")) || {}) //To get the filter Value in page reload
   }, [])
 
@@ -59,6 +60,7 @@ const Listing = () => {
       }
     }
     const finalParams = queryParams.join("&") //To join the elements of an array with &
+    setQuery(finalParams)
     setSearchParams(finalParams)
   }, [filter])
 
