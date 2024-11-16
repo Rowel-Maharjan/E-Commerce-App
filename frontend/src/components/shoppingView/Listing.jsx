@@ -9,14 +9,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllFilteredProducts } from '@/store/shop/shop.slice'
 import { useSearchParams } from 'react-router-dom'
 import ProductDetails from './ProductDetails'
+import { addToCart } from '@/store/shop/cart.slice'
+import { useToast } from "@/hooks/use-toast"
 
 const Listing = () => {
   const dispatch = useDispatch()
   const { productList, productDetails } = useSelector(state => state.shopProducts)
+  const { user } = useSelector(state => state.auth)
   const [Sort, setSort] = useState({})
   const [filter, setFilter] = useState({})
   const [searchParams, setSearchParams] = useSearchParams()
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false)
+  const { toast } = useToast()
 
   const handleSort = (value) => {
     setSort(value)
@@ -37,6 +41,15 @@ const Listing = () => {
     sessionStorage.setItem("filter", JSON.stringify(updatedValue))
   };
 
+  const handleAddToCart = (productID) => {
+    toast({
+      description: "Product Added to Cart!",
+      className: "bg-black text-white",
+      duration: 2500
+    })
+    dispatch(addToCart({ userID: user.id, productID, quantity: 1 }))
+  }
+
   useEffect(() => {
     dispatch(fetchAllFilteredProducts({ filterParams: filter, sortParams: Sort }))
   }, [dispatch, Sort, filter])
@@ -45,7 +58,6 @@ const Listing = () => {
     if (productDetails)
       setOpenDetailsDialog(true)
   }, [productDetails])
-
 
 
   useEffect(() => {
@@ -104,11 +116,11 @@ const Listing = () => {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
           {
             productList && productList.length > 0 ?
-              productList.map(product => <ProductTile key={product._id} product={product} setOpenDetailsDialog={setOpenDetailsDialog} />) : <div className='text-lg font-bold'>No Products to show</div>
+              productList.map(product => <ProductTile key={product._id} product={product} setOpenDetailsDialog={setOpenDetailsDialog} handleAddToCart={handleAddToCart} />) : <div className='text-lg font-bold'>No Products to show</div>
           }
         </div>
       </div>
-      <ProductDetails open={openDetailsDialog} setOpen={setOpenDetailsDialog} productDetails={productDetails} />
+      <ProductDetails open={openDetailsDialog} setOpen={setOpenDetailsDialog} productDetails={productDetails} handleAddToCart={handleAddToCart} />
     </div>
   )
 }

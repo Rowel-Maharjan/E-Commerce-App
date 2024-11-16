@@ -23,7 +23,7 @@ const Register = () => {
       const response = await axios.post("http://localhost:3000/api/auth/register", data, {
         withCredentials: true
       });
-      await dispatch(registerUser())
+      dispatch(registerUser())
       if (response.data.success) {
         reset()
         navigate("/auth/login")
