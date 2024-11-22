@@ -63,7 +63,7 @@ const Listing = () => {
   useEffect(() => {
     setSort("atoz")
     setFilter(JSON.parse(sessionStorage.getItem("filter")) || {}) //To get the filter Value in page reload
-  }, [])
+  }, [searchParams])
 
   //For Filter
   useEffect(() => {

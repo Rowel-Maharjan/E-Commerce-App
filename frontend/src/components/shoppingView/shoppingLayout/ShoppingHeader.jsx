@@ -17,16 +17,12 @@ function MenuItems({ setOpenMenu }) {
   const handleListingPage = (currentItem) => {
     if (currentItem.id === "home") {
       navigate("/shop/home");
-    } else if (currentItem.id === "allproduct") {
-      sessionStorage.removeItem("filter");
-      navigate("/shop/listing")
     } else {
       sessionStorage.removeItem("filter");
-      sessionStorage.setItem("filter", JSON.stringify({ category: [currentItem.id] }));
+      sessionStorage.setItem("filter", JSON.stringify({ category: [currentItem.id], brand: [] }));
       navigate("/shop/listing")
     }
     setOpenMenu(false);
-
   }
 
   return <nav className='flex flex-col mb-3 md:mb-0 md:items-center gap-6 md:gap-6 sm:gap-6 md:flex-row'>
