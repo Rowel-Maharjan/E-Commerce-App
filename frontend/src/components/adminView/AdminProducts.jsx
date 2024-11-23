@@ -60,7 +60,7 @@ const AdminProducts = () => {
           setOpenCreateProduct(false);
           setCurrentEditedProduct(null)
           toast({
-            description: "Product Updated Successfully", // Changed message for clarity
+            description: "Product Updated Successfully",
             className: "bg-black text-white",
             duration: 2500,
           });
@@ -106,7 +106,7 @@ const AdminProducts = () => {
 
         <ImageUpload imageLoadingState={imageLoadingState} setImageLoadingState={setImageLoadingState} imageFile={imageFile} setImageFile={setImageFile} uploadedImageURL={uploadedImageURL} setUploadedImageURL={setUploadedImageURL} />
         <div className='py-4'>
-          <CommonForm onSubmit={onSubmit} formControls={addProductFormElements} buttonText={currentEditedProduct === null ? "Add Product" : "Update Product"} currentEditedProduct={currentEditedProduct} />
+          <CommonForm onSubmit={onSubmit} formControls={addProductFormElements} buttonText={currentEditedProduct === null ? "Add Product" : "Update Product"} currentEdited={currentEditedProduct} />
         </div>
       </SheetContent>
     </Sheet>

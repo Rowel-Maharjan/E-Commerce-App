@@ -34,7 +34,7 @@ function MenuItems({ setOpenMenu }) {
   </nav>
 }
 
-function HeaderRightContent() {
+function HeaderRightContent({ setOpenMenu }) {
 
   const { user } = useSelector(state => state.auth)
   const { cartItems } = useSelector(state => state.shopCart)
@@ -53,7 +53,7 @@ function HeaderRightContent() {
         <ShoppingCart className='w-6 h-6' />
         <span className='sr-only'>User Cart</span>
       </Button>
-      <CartWrapper cartItems={cartItems} />
+      <CartWrapper cartItems={cartItems} setOpenCartSheet={setOpenCartSheet} />
     </Sheet>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -64,7 +64,7 @@ function HeaderRightContent() {
       <DropdownMenuContent className='w-56 bg-[#09090b] text-white'>
         <DropdownMenuLabel>My Profile</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => navigate("/shop/account")}>
+        <DropdownMenuItem onClick={() => {navigate("/shop/account"); setOpenMenu(false)}}>
           <UserCog className='mr-2 h-4 w-4' />
           <span> My Account</span>
         </DropdownMenuItem>
@@ -104,14 +104,14 @@ const ShoppingHeader = () => {
               <span className='font-bold'>Ecommerce</span>
             </Link>
             <MenuItems setOpenMenu={setOpenMenu} />
-            <HeaderRightContent />
+            <HeaderRightContent setOpenMenu={setOpenMenu} />
           </SheetContent>
         </Sheet>
         <div className='hidden md:block'>
           <MenuItems setOpenMenu={setOpenMenu} />
         </div>
         <div className='hidden md:block'>
-          <HeaderRightContent />
+          <HeaderRightContent setOpenMenu={setOpenMenu} />
         </div>
       </div>
     </div>

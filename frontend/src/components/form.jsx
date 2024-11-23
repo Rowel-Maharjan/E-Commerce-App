@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Button } from './ui/button';
 import { Eye, EyeOff } from 'lucide-react';
 
-function CommonForm({ formControls, buttonText, onSubmit, currentEditedProduct = null }) {
+function CommonForm({ formControls, buttonText, onSubmit, currentEdited = null }) {
     const { register, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm();
 
     function handleFormSubmit(data) {
@@ -15,11 +15,13 @@ function CommonForm({ formControls, buttonText, onSubmit, currentEditedProduct =
 
     //Fill the form for edited Product
     useEffect(() => {
-        if (currentEditedProduct)
-            reset(currentEditedProduct)
-        else
+        if (currentEdited) {
+            reset(currentEdited)
+        }
+        else {
             reset()
-    }, [currentEditedProduct, reset])
+        }
+    }, [currentEdited, reset])
 
 
     function renderInputByComponentType(getControlItem) {
