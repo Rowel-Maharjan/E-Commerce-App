@@ -94,6 +94,7 @@ const AdminProducts = () => {
       setOpenCreateProduct(false)    //Another way to do it
       setUploadedImageURL(null)
       setCurrentEditedProduct(null)
+      setImageFile(null);
 
     }} >
       <SheetContent side="right" className="overflow-auto">
@@ -105,7 +106,7 @@ const AdminProducts = () => {
 
         <ImageUpload imageLoadingState={imageLoadingState} setImageLoadingState={setImageLoadingState} imageFile={imageFile} setImageFile={setImageFile} uploadedImageURL={uploadedImageURL} setUploadedImageURL={setUploadedImageURL} />
         <div className='py-4'>
-          <CommonForm onSubmit={onSubmit} uploadedImageURL={uploadedImageURL} formControls={addProductFormElements} buttonText={currentEditedProduct === null ? "Add Product" : "Update Product"} currentEditedProduct={currentEditedProduct} />
+          <CommonForm onSubmit={onSubmit} formControls={addProductFormElements} buttonText={currentEditedProduct === null ? "Add Product" : "Update Product"} currentEditedProduct={currentEditedProduct} />
         </div>
       </SheetContent>
     </Sheet>
