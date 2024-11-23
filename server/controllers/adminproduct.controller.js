@@ -6,7 +6,6 @@ import product from "../models/Product.js"
 const imageupload = async (req, res) => {
     try {
         if (!req.file) {
-            console.log("No file uploaded yet");
             return res.status(400).json({ error: "No file uploaded" });
         }
         const b64 = Buffer.from(req.file.buffer).toString("base64")  //Multer provide file as a buffer
