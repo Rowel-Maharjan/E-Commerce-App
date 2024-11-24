@@ -8,6 +8,7 @@ function CommonForm({ formControls, buttonText, onSubmit, currentEdited = null }
     const { register, handleSubmit, watch, reset, formState: { errors, isSubmitting } } = useForm();
 
     function handleFormSubmit(data) {
+        reset()
         onSubmit(data);
     }
 
@@ -19,9 +20,13 @@ function CommonForm({ formControls, buttonText, onSubmit, currentEdited = null }
             reset(currentEdited)
         }
         else {
-            reset()
+            const defaultValues = formControls.reduce((acc, control) => {
+                acc[control.name] = "";
+                return acc;
+            }, {});
+            reset(defaultValues);
         }
-    }, [currentEdited, reset])
+    }, [currentEdited, reset, formControls])
 
 
     function renderInputByComponentType(getControlItem) {

@@ -22,7 +22,6 @@ const Address = () => {
         duration: 2500
       })
       return;
-
     }
 
     if (currentEditedAddress === null) {
