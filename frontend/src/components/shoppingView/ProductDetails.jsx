@@ -29,9 +29,9 @@ const ProductDetails = ({ open, setOpen, productDetails, handleAddToCart }) => {
                         <DialogDescription className='text-muted-foreground text-2xl mb-5 mt-4'>{productDetails?.description}</DialogDescription>
                     </div>
                     <div className='flex items-center justify-between'>
-                        <p className={`text-3xl font-bold text-primary ${productDetails?.salePrice > 0 ? "line-through" : ""}`}>${productDetails?.price}</p>
+                        <p className={`text-3xl font-bold text-primary ${productDetails?.salePrice > 0 ? "line-through" : ""}`}>Rs.{productDetails?.price}</p>
                         {
-                            productDetails?.salePrice > 0 ? <p className='text-2xl font-bold text-muted-foreground'>${productDetails.salePrice}</p> : null
+                            productDetails?.salePrice > 0 ? <p className='text-2xl font-bold text-muted-foreground'>Rs.{productDetails.salePrice}</p> : null
                         }
                     </div>
                     <div className='flex items-center gap-2'>

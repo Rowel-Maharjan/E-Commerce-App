@@ -47,7 +47,7 @@ const CartItemsContent = ({ cartItems }) => {
             <div className='flex flex-col items-end'>
                 <Trash onClick={() => handleDelete(cartItems)} className='cursor-pointer mb-1' size={20} />
                 <p className='font-semibold'>
-                    ${((cartItems?.salePrice > 0 ? cartItems.salePrice : cartItems?.price) * cartItems?.quantity).toFixed(2)}
+                    Rs.{((cartItems?.salePrice > 0 ? cartItems.salePrice : cartItems?.price) * cartItems?.quantity).toFixed(2)}
                 </p>
             </div>
         </div>

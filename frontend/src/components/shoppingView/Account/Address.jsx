@@ -79,15 +79,16 @@ const Address = () => {
     })
   }
 
+
   useEffect(() => {
     dispatch(fetchAllAddresses({ userID: user?.id }))
   }, [dispatch])
 
   return <Card>
-    <div className='mb-2 p-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2'>
+    <div className='mb-2 p-3 grid grid-cols-1 md:grid-cols-2 gap-2'>
       {
         addressList?.addressInfo && addressList?.addressInfo?.length > 0 ?
-          addressList?.addressInfo.map((item, index) => <AddressCard key={index} addressInfo={item} handleDeleteAddress={handleDeleteAddress} handleEditAddress={handleEditAddress} />) : <div className='font-bold'>No Address Added. Add Address Below.</div>
+          addressList?.addressInfo.map((item, index) => <AddressCard handleEditAddress={handleEditAddress} setCurrentEditedAddress={setCurrentEditedAddress} handleDeleteAddress={handleDeleteAddress} key={index} addressInfo={item} />) : <div className='font-bold'>No Address Added. Add Address Below.</div>
       }
 
     </div>

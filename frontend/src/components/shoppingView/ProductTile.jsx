@@ -32,9 +32,9 @@ const ProductTile = ({ product, handleAddToCart }) => {
                         <span className='text-sm text-muted-foreground'>{capitalizeFirstLetter(product.brand)}</span>
                     </div>
                     <div className={`flex ${product.salePrice > 0 ? 'justify-between' : 'justify-end'} items-center mb-2`}>
-                        <span className={`${product.salePrice > 0 ? 'line-through' : ''} text-2xl font-semibold text-primary`}>${product.price}</span>
+                        <span className={`${product.salePrice > 0 ? 'line-through' : ''} text-2xl font-semibold text-primary`}>Rs.{product.price}</span>
                         {
-                            product.salePrice > 0 && <span className='text-2xl font-semibold text-primary'>${product.salePrice}</span>
+                            product.salePrice > 0 && <span className='text-2xl font-semibold text-primary'>Rs.{product.salePrice}</span>
                         }
                     </div>
                 </CardContent>

@@ -49,7 +49,7 @@ const AdminSidebar = ({ open, setOpen }) => {
   return (
     <Fragment>
       <div>
-        <aside className={`fixed top-0 left-0 h-full w-full sm:relative sm:w-64 flex-col border-r bg-background p-6 transition-transform duration-300 ${open ? 'translate-x-0 ' : '-translate-x-full'
+        <aside className={`fixed top-0 left-0 h-full w-full sm:relative sm:w-64 flex-col border-r bg-background p-6 transition-transform z-50 duration-300 ${open ? 'translate-x-0 ' : '-translate-x-full'
           } sm:translate-x-0 sm:flex`}>
           <div onClick={() => { navigate("/admin/dashboard"); setOpen(!open) }} className='flex justify-between items-center gap-2 cursor-pointer'>
             <div className='flex justify-center items-center gap-2'>
